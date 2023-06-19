@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+const DiaryEditor = () => {
 
     const [state, setState] = useState({
         author: "",
@@ -7,7 +8,7 @@ import { useState } from "react";
     })
     
     const [author, setAuthor] = useState("");
-    const [content, setContent] = useState("")
+    const [content, setContent] = useState("");
 
     return(
         <div className="DiaryEditor">
@@ -27,5 +28,6 @@ import { useState } from "react";
         </div>
     </div>
     );
+};
 
 export default DiaryEditor;
