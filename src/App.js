@@ -45,18 +45,22 @@ function App() {
 
   },[]);
 
-  const onRemove = (targetId) => {
-    const newDiaryList  = data.filter((it) => it.id !== targetId); //id가 targetId와 같지 않은 요소들만 새로운 배열로 반환
-    setData(newDiaryList);
-  }
+  // const onRemove = (targetId) => {
+  //   const newDiaryList  = data.filter((it) => it.id !== targetId); //id가 targetId와 같지 않은 요소들만 새로운 배열로 반환
+  //   setData(newDiaryList);
+  // } 최적화 하기 전
 
-  const onEdit = (targetId,newContent) =>{
-    setData(
+  const onRemove = useCallback((targetId) => {
+    setData(data => data.filter((it) => it.id !== targetId));
+  },[])
+
+  const onEdit = useCallback((targetId,newContent) =>{
+    setData(data=>
       data.map((it)=> 
       it.id ===targetId ? { ...it, content: newContent} : it
       )
     )
-  }
+  }, []);
 
   const getDiaryAnalysis = useMemo(() =>{//useMemo를 사용하게 되면 getDiaryAnalysis는 더이상 함수가 아님, 하나의 값암
 
