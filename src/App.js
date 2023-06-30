@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './App.css';
 
 import DiaryEditor from "./DiaryEditor";
@@ -31,7 +31,7 @@ function App() {
     getData();
   },[])
 
-  const onCreate = (author, content, emotion) => {
+  const onCreate = useCallback((author, content, emotion) => {
     const created_date = new Date().getTime();
     const newItem = {
       author,
@@ -41,12 +41,11 @@ function App() {
       id : dataId.current
     };
     dataId.current += 1;
-    setData([newItem, ...data]);
+    setData((data)=>[newItem, ...data]);
 
-  }
+  },[]);
 
   const onRemove = (targetId) => {
-    console.log(`${targetId}가 삭제되었습니다`)
     const newDiaryList  = data.filter((it) => it.id !== targetId); //id가 targetId와 같지 않은 요소들만 새로운 배열로 반환
     setData(newDiaryList);
   }
@@ -60,7 +59,6 @@ function App() {
   }
 
   const getDiaryAnalysis = useMemo(() =>{//useMemo를 사용하게 되면 getDiaryAnalysis는 더이상 함수가 아님, 하나의 값암
-    console.log("일기 분석 시작");
 
     const goodCount = data.filter((it)=> it.emotion >=3).length;
     const badCount = data.length - goodCount;
